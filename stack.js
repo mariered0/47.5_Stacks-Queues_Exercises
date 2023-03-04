@@ -23,10 +23,11 @@ class Stack {
     const newNode = new Node(val);
     if(!this.first){
       this.first = newNode;
-      this.last = this.first;
+      this.last = newNode;
     }else{
-      this.first = newNode.next;
+      let tmp = this.first;
       this.first = newNode;
+      this.first.next = tmp;
     }
     this.size += 1;
     return undefined;
@@ -38,11 +39,16 @@ class Stack {
   pop() {
     if(this.size <= 0) throw new Error('Stack is empty');
     //i don't know why this becomes null.
-    let val = this.first.val;
+    
+    let val = this.first;
+
+    if(this.first == this.last){
+      this.last = null;
+    }
+
     this.first = this.first.next;
     this.size -= 1;
-    if(this.size < 2) this.last = this.first;
-    return val;
+    return val.val;
   }
 
   /** peek(): return the value of the first node in the stack. */
@@ -54,11 +60,12 @@ class Stack {
   /** isEmpty(): return true if the stack is empty, otherwise false */
 
   isEmpty() {
-    if(this.size === 0){
-      return true;
-    }else{
-      return false;
-    }
+    return this.size === 0;
+    // if(this.size === 0){
+    //   return true;
+    // }else{
+    //   return false;
+    // }
 
   }
 }
